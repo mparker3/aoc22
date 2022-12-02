@@ -21,6 +21,6 @@ do
 done <"$inputfile"
 # add whatever the last element is, because there won't be a final newln
 sums+=($curr_sum)
-printf "%d\n" "${sums[@]}" | sort | tail -n 1
+printf "%d\n" "${sums[@]}" | sort | tail -n 3 | awk '{s+=$1} END {print s}'
 
 
