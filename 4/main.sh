@@ -23,19 +23,14 @@ while read -r line; do
 		first_end=$swapvar
 	fi
 
-	
-	# count it and short-circuit if the ending of the first pair is equal to the beginning of the second since that's an overlap but a diff vs sorted order will pick that up
-	if [ $first_end -eq $second_beginning ]; then
-		(( overlaps+=1 ))
-		continue
-	fi
 
-	# find pairs where one fully contains the other - a fully contained pair will have the same sorted order as unsorted when written as a1,b1,a2,b2
+	# find pairs where one partially contains the other - if ordered and a partial contain exists, the sort of the listed pairs will be different from the listed pairs
 	order="$first_beginning\n$first_end\n$second_beginning\n$second_end"
 	check=$((echo -e $order | sort --numeric-sort | diff -q <(echo -e $order)  -) || true )
 	diff_chars=( ${#check} - 1 )
 
-	if [ $diff_chars -ne 0 ]; then
+	# also count it if the middle two are the same, if they are, that is an overlap not caught by the above
+	if [ $diff_chars -ne 0 ] || [ $first_end -eq $second_beginning ] ; then
 		((overlaps+=1))
 	fi
 done < input.txt
