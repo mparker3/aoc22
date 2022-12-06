@@ -1,0 +1,1 @@
+buf=$(cat input.txt); first=$(for i in $(seq 0 1 $((${#buf}-4))); do group="${buf:$i:4}"; echo -e "$(($i + 4)).: $(echo -e "$group" | fold -w1 | sort | uniq | tr -d '[:space:]' | awk '{ (length($1) == 4) ? isbeacon = "true"  : isbeacon = "false"; print(""), isbeacon }')"; done | rg 'true' | head -n 1); echo $first;
