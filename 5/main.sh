@@ -44,9 +44,9 @@ for instr in "${instructions[@]}"; do
 	src=$(( ${values[3]} - 1))
 	dest=$(( ${values[5]} - 1))
 
-	rev_part=$(echo -e "${stacks[$src]}" | head -c ${cnt} | rev)
+	mov_part=$(echo -e "${stacks[$src]}" | head -c ${cnt})
 
-	stacks[$dest]="$rev_part""${stacks[$dest]}"
+	stacks[$dest]="$mov_part""${stacks[$dest]}"
 	stacks[$src]="$(echo ${stacks[$src]} | cut -c ${plusone}-)"
 done
 echo "${stacks[@]}"
