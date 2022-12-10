@@ -37,8 +37,8 @@ exec 3>"$sorted_sizes"
 exec 4<"$sorted_sizes"
 rm "$sorted_sizes"
 
-while read line; do
-	echo -e $line
+while read -r line; do
+	echo -e "$line"
 done < input.txt | awk "$CMD" | sort --reverse --numeric-sort >&3
 fs_disk=70000000
 need=30000000
